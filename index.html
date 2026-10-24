@@ -83,11 +83,13 @@ button.zcard{cursor:pointer}
 .map .zcard:nth-child(4) .planet{animation-delay:2.4s}
 .map .zcard:nth-child(5) .planet{animation-delay:3.2s}
 .map .zcard:nth-child(6) .planet{animation-delay:4s}
+.map .zcard:nth-child(7) .planet{animation-delay:4.8s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 .p-island{background:radial-gradient(circle at 34% 28%,#D9BFFF,#9B6BE0 55%,#6D3BB5)}
 .p-lab{background:radial-gradient(circle at 34% 28%,#CDEFFF,#5FB8F0 55%,#1E86D6)}
 .p-family{background:radial-gradient(circle at 34% 28%,#FFE7C4,#FFB066 55%,#F08A3C)}
 .p-mission{background:radial-gradient(circle at 34% 28%,#8FA9DC,#3D5A94 55%,#1E2F52)}
+.p-lang{background:radial-gradient(circle at 34% 28%,#CDEED6,#4FAE7A 55%,#1F6B4A)}
 .p-stage{background:radial-gradient(circle at 34% 28%,#FFE0EC,#F7A8C4 55%,#EE7FA8)}
 .p-home{background:radial-gradient(circle at 34% 28%,#E4F6D2,#A5DC8E 55%,#6FBF67)}
 .zcard.someday .planet{filter:saturate(.7) brightness(1.04)}
@@ -104,6 +106,7 @@ button.zcard{cursor:pointer}
 .zheading .pverb{font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--coral)}
 .zcard[data-zone="island"] .pverb{color:#7B3FB0}
 .zcard[data-zone="lab"] .pverb{color:#1E86D6}
+.zcard[data-zone="lang"] .pverb{color:#1F6B4A}
 .zcard[data-zone="family"] .pverb{color:#E07B2A}
 .zcard[data-zone="mission"] .pverb{color:#3D5A94}
 .zcard[data-zone="stage"] .pverb{color:#D6568C}
@@ -377,7 +380,7 @@ footer .f2{font-size:12.5px;margin-top:4px}
 <!-- ================= ZONE MAP ================= -->
 <section aria-label="Zone map">
   <h2>The Zone Map</h2>
-  <p class="sub">Six zones, one universe &mdash; tap a glowing door to step in</p>
+  <p class="sub">Seven zones, one universe &mdash; tap a glowing door to step in</p>
   <div class="map" id="zoneMap">
 
     <a class="zcard" data-zone="island" href="https://raghuramsuda-sys.github.io/sreshta-universe/">
@@ -435,6 +438,26 @@ footer .f2{font-size:12.5px;margin-top:4px}
       </div>
       <div class="zheading"><span class="pname">Tech Lab</span><span class="pverb">TRAIN</span></div>
       <p class="zline">Computer, coding, AI &mdash; your laboratory</p>
+      <p class="zact"><span class="visit">Enter &rarr;</span></p>
+    </a>
+
+    <a class="zcard" data-zone="lang" href="https://raghuramsuda-sys.github.io/sreshta-languages/">
+      <div class="planetwrap">
+        <div class="planet p-lang">
+          <svg class="zart" viewBox="0 0 120 96" role="img" aria-label="A globe with a speech bubble saying Hallo">
+        <circle cx="44" cy="54" r="29" fill="#7ED0F7" stroke="#1F6B4A" stroke-width="2.6"/>
+        <path d="M24 40 q10 -7 20 -2 M20 56 q13 6 26 1 M30 74 q8 5 18 3" stroke="#2E9E4F" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M44 25 v58 M31 33 q-6 21 0 42 M57 33 q6 21 0 42 M17 54 h54" stroke="#1F6B4A" stroke-width="1.8" fill="none" opacity=".55"/>
+        <path d="M66 14 h42 a7 7 0 0 1 7 7 v14 a7 7 0 0 1 -7 7 H86 l-9 9 v-9 H66 a7 7 0 0 1 -7 -7 V21 a7 7 0 0 1 7 -7 Z" fill="#FFC94D" stroke="#C79A3B" stroke-width="2.2"/>
+        <text x="87" y="33" text-anchor="middle" font-family="inherit" font-size="12.5" font-weight="800" fill="#5A3A00">Hallo!</text>
+        <circle cx="104" cy="66" r="9" fill="#FF8FAB" stroke="#C2557E" stroke-width="2"/>
+        <text x="104" y="70.5" text-anchor="middle" font-family="inherit" font-size="11" font-weight="800" fill="#5E2142">ß</text>
+      </svg>
+        </div>
+        <span class="newtag" id="langNewTag" data-new-until="2027-01-31">New &#10024;</span>
+      </div>
+      <div class="zheading"><span class="pname">Languages</span><span class="pverb">SPEAK</span></div>
+      <p class="zline">German with Bruno &mdash; learn to speak like a native</p>
       <p class="zact"><span class="visit">Enter &rarr;</span></p>
     </a>
 
@@ -707,7 +730,7 @@ footer .f2{font-size:12.5px;margin-top:4px}
 </main>
 
 <footer>
-  <p class="f1">6 zones &bull; 1 universe</p>
+  <p class="f1">7 zones &bull; 1 universe</p>
   <p class="f2">Made with love for Sreshta</p>
 </footer>
 </div>
@@ -756,15 +779,17 @@ function renderForDate(d){
   if (fam) fam.classList.toggle("festglow", !!fest);
   var badge = document.getElementById("festBadge");
   if (badge) badge.hidden = !fest;
-  var tag = document.getElementById("newTag");
-  if (tag) {
-    var until = tag.getAttribute("data-new-until") || "";
-    var parts = until.split("-");
-    if (parts.length === 3) {
-      var end = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10), 23, 59, 59);
-      tag.hidden = d.getTime() > end.getTime();
+  ["newTag", "langNewTag"].forEach(function (tid) {
+    var tag = document.getElementById(tid);
+    if (tag) {
+      var until = tag.getAttribute("data-new-until") || "";
+      var parts = until.split("-");
+      if (parts.length === 3) {
+        var end = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10), 23, 59, 59);
+        tag.hidden = d.getTime() > end.getTime();
+      }
     }
-  }
+  });
 }
 function todayFromQuery(){
   try {
